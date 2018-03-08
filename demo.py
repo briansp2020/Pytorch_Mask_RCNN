@@ -1,6 +1,9 @@
 import os
 import time
 
+import sys
+sys.path.insert(0, "lib/roi_align")
+
 import cv2
 import matplotlib
 import matplotlib.pyplot as plt
@@ -129,7 +132,7 @@ if __name__ == "__main__":
     config = InferenceConfig()
     config.display()
 
-    pretrained_weight = "./models/mrcnn.pth"
+    pretrained_weight = "./mrcnn.pth"
     state_dict = torch.load(pretrained_weight)
 
     model = MaskRCNN(config=config, mode='inference')

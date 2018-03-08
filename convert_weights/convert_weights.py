@@ -21,6 +21,10 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 from torch.nn.parameter import Parameter
 
+sys.path.insert(0, ".")
+sys.path.insert(0, "lib")
+sys.path.insert(0, "lib/roi_align")
+
 from config import Config
 from network.mask_rcnn import MaskRCNN
 
@@ -217,7 +221,7 @@ if __name__ == "__main__":
     model.cuda()
     model.eval()
         
-    tf_weights= '/home/tensorboy/Downloads/mask_rcnn_coco.h5'
+    tf_weights= '../Mask_RCNN/mask_rcnn_coco.h5'
     state_dict = get_state_dict(tf_weights)
         
 

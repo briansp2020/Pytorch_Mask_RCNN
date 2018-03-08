@@ -110,7 +110,8 @@ def ROIAlign(feature_maps, rois, config, pool_size, mode='bilinear'):
         box_indices = ixx.view(-1).int() * 0
         ix = torch.unsqueeze(ixx, 1)
         level_boxes = torch.masked_select(rois, ix)
-        if level_boxes.size()[0] == 0:
+        #print (not level_boxes.size())
+        if not level_boxes.size() or level_boxes.size()[0] == 0:
             continue
         level_boxes = level_boxes.view(-1, 4)
         
@@ -630,7 +631,8 @@ class MaskRCNN(nn.Module):
         refined_proposals = []
         for i in range(self.config.IMAGES_PER_GPU):
             indices = nms(
-                torch.cat([refined_anchors_clipped.data[i], scores.data[i]], 1), 0.7)
+                torch.cat([refined_anchors_clipped.data[i], scores.data[i].unsqueeze(1)], 1),
+                          self.config.RPN_NMS_THRESHOLD)
             indices = indices[:self.proposal_count]
             indices = torch.stack([indices, indices, indices, indices], dim=1)
             indices = Variable(indices).cuda()

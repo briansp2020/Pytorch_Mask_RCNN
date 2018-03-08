@@ -1,0 +1,7 @@
+*.o
+*.so
+#*.ipynb
+.ipynb_checkpoints/
+*.pth
+__pycache__/
+
